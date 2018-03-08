@@ -51,7 +51,7 @@
 
 
 #define BULLET_LENGTH 10
-#define FIRE_DELAY 100.0f
+#define FIRE_DELAY 0.1f
 
 #ifdef _DEBUG
 #define APP_RENDER_UPDATE_TIMES				true

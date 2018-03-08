@@ -7,11 +7,52 @@
 #include <math.h>  
 #include <vector>
 #include "Player.h"
+
 //------------------------------------------------------------------------
 #include "app\app.h"
+class Bullet
+{
+public:
+	void rotate(POINT &point, double radians, POINT origin)
+	{
+		float cosResult = cos(radians);
+		float sinResult = sin(radians);
+
+		point.x -= origin.x;
+		point.y -= origin.y;
+
+		float xRes = (cosResult * point.x) - (sinResult * point.y);
+		float yRes = (sinResult * point.x) + (cosResult * point.y);
+
+		point.x = xRes +origin.x;
+		point.y = yRes +origin.y;
+	}
+	void onUpdate()
+	{
+		float dy = end.y - position.y;
+		float dx = end.x - position.x;
+		position.x += dx;
+		position.y += dy;
+		end = position;
+		end.x += BULLET_LENGTH;
+		rotate(end, rotation, position);		
+	}
+	Bullet(POINT p, float angle)
+	{
+		position = p;
+		rotation = angle;
+		end = p;
+		end.x = position.x + BULLET_LENGTH;
+		rotate(end, rotation, position);
+	}
+	POINT position;
+	POINT end;
+	float rotation;
+};
+
 
 Player player;
-std::vector<POINT> bullets;
+std::vector<Bullet> bullets;
 //------------------------------------------------------------------------
 // Called before first update. Do any initial setup here.
 //------------------------------------------------------------------------
@@ -30,12 +71,12 @@ void inputHandling(float deltaTime)
 	static float time = 0.0f;
 	if (App::IsKeyPressed(VK_LBUTTON) && time >= FIRE_DELAY)
 	{
-		bullets.push_back(POINT{ 0, 0 });
+		bullets.push_back(Bullet(player.arrow.arrowLeftSidePoints[0], player.arrow.rotation));
 		time = 0.0f;
 	}
 	else
 	{
-		time += deltaTime;
+		time += deltaTime / 1000.0f;
 	}
 	if (App::IsKeyPressed('W'))
 	{
@@ -60,9 +101,9 @@ void Update(float deltaTime)
 {
 	player.arrow.rotateArrow();
 	inputHandling(deltaTime);
-	for (std::vector<POINT>::iterator it = bullets.begin(); it != bullets.end(); ++it)
+	for (std::vector<Bullet>::iterator it = bullets.begin(); it != bullets.end(); ++it)
 	{
-		(*it).x += 1;
+		(*it).onUpdate();
 	}
 
 }
@@ -77,11 +118,10 @@ void Render()
 	POINT p = player.position;
 	App::DrawLine(p.x, p.y, p.x, p.y + 1, 0.0f, 1.0f, 0.0f);
 	player.arrow.DrawArrow();
-	for (std::vector<POINT>::iterator it = bullets.begin(); it != bullets.end(); ++it)
+
+	for (std::vector<Bullet>::iterator it = bullets.begin(); it != bullets.end(); ++it)
 	{
-		POINT temp = *it;
-		App::DrawLine(temp.x, temp.y, temp.x + BULLET_LENGTH, temp.y + BULLET_LENGTH);
-		ZeroMemory(&temp, sizeof(temp));
+		App::DrawLine((*it).position.x, (*it).position.y,(*it).end.x, (*it).end.y);
 	}
 }
 

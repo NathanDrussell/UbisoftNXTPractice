@@ -2,6 +2,7 @@
 // App.cpp
 // Implementation of the calls that are exposed via the App namespace.
 //---------------------------------------------------------------------------------
+//#include ""
 #include "stdafx.h"
 //---------------------------------------------------------------------------------
 #include <string>
@@ -27,6 +28,34 @@ namespace App
 		glColor3f(r, g, b); // Yellow
 		glVertex2f(sx, sy);
 		glVertex2f(ex, ey);
+		glEnd();
+	}
+
+	void DrawLine(POINT source, POINT end, float r, float g, float b)
+	{
+#if APP_USE_VIRTUAL_RES		
+		APP_VIRTUAL_TO_NATIVE_COORDS(source.x, source.y);
+		APP_VIRTUAL_TO_NATIVE_COORDS(end.x, end.y);
+#endif
+		glBegin(GL_LINES);
+		glColor3f(r, g, b); // Yellow
+		glVertex2f(source.x, source.y);
+		glVertex2f(end.x, end.y);
+		glEnd();
+	}
+
+	void DrawTri(float ax, float ay, float bx, float by, float cx, float cy, float r, float g, float b)
+	{
+#if APP_USE_VIRTUAL_RES		
+		APP_VIRTUAL_TO_NATIVE_COORDS(ax, ay);
+		APP_VIRTUAL_TO_NATIVE_COORDS(bx, by);
+		APP_VIRTUAL_TO_NATIVE_COORDS(cx, cy);
+#endif
+		glBegin(GL_TRIANGLES);
+		glColor3f(r, g, b); // Yellow
+		glVertex2f(ax, ay);
+		glVertex2f(bx, by);
+		glVertex2f(cx, cy);
 		glEnd();
 	}
 

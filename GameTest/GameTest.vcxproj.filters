@@ -33,9 +33,6 @@
     <ClInclude Include="App\SimpleSound.h">
       <Filter>Source Files\App</Filter>
     </ClInclude>
-    <ClInclude Include="stdafx.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="targetver.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -59,6 +56,9 @@
     </ClInclude>
     <ClInclude Include="Arrow.h">
       <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="stdafx.h">
+      <Filter>Source Files\App</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

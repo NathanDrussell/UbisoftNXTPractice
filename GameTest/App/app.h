@@ -24,7 +24,11 @@ namespace App
 	//-------------------------------------------------------------------------------------------
 	// Draw a 2D Line from sx,sy to ex, ey using color r = red, g = green, b=blue.
 	//-------------------------------------------------------------------------------------------
-	void DrawLine( float sx, float sy, float ex, float ey, float r = 1.0f, float g = 1.0f, float b = 1.0f );
+	void DrawLine(float sx, float sy, float ex, float ey, float r = 1.0f, float g = 1.0f, float b = 1.0f);
+
+	void DrawLine(POINT source, POINT end, float r = 1.0f, float g = 1.0f, float b = 1.0f);
+
+	void DrawTri( float ax, float ay, float bx, float by, float cx, float cy, float r = 1.0f, float g = 1.0f, float b = 1.0f );
 
 	//-------------------------------------------------------------------------------------------
 	// void Print(float x, float y, const char *text, float r = 1.0f, float g = 1.0f, float b = 1.0f, void *font = GLUT_BITMAP_HELVETICA_18);
