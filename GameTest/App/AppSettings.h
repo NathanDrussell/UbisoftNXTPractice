@@ -49,6 +49,10 @@
 #define APP_PAD_EMUL_BUTTON_LEFT_SHOULDER	('3')
 #define APP_PAD_EMUL_BUTTON_RIGHT_SHOULDER	('4')
 
+
+#define BULLET_LENGTH 10
+#define FIRE_DELAY 100.0f
+
 #ifdef _DEBUG
 #define APP_RENDER_UPDATE_TIMES				true
 #else
